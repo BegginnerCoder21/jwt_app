@@ -10,11 +10,14 @@ const corsOptions = require('./config/cors');
 const connectDB = require('./config/databases');
 const credentials = require('./middlewares/credentials');
 const errorHandler = require('./middlewares/errorHandler');
+const router = require('./routes/route');
+const errorNotFound = require('./controllers/error/errorNotFound');
 const PORT = 2100;
 
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
+//connexion database
 connectDB();
 
 //allowed credentials
@@ -32,6 +35,18 @@ app.use('static',express.static(path.join(__dirname,'public')));
 //Default error handler
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log('le server ecoute sur le port 2100');
+//Router 
+app.use('/api/auth',router);
+
+//erreur lorsqu'aucun chemin de sera trouvé
+app.all('*',errorNotFound);
+
+//ce code nous garantira que l'application sera ouvert
+//uniquement lorsque la connexion à la base de donné sera
+//effectuée avec succès
+mongoose.connection.once('open',() => {
+    console.log('connexion à la base de donnée reussi');
+    app.listen(PORT, () => console.log('le server ecoute sur le port 2100'));
 });
+
+
