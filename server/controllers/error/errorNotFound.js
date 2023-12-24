@@ -1,5 +1,3 @@
-
-
 const errorNotFound = (req,res) => {
     res.status(404)
     if(req.accepts('json')){

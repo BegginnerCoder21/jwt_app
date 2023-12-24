@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const jsonwebtoken = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
@@ -10,11 +9,11 @@ const corsOptions = require('./config/cors');
 const connectDB = require('./config/databases');
 const credentials = require('./middlewares/credentials');
 const errorHandler = require('./middlewares/errorHandler');
-const router = require('./routes/route');
+const router = require('./routes/authRoute');
 const errorNotFound = require('./controllers/error/errorNotFound');
 const PORT = 2100;
 
-app.use(express.urlencoded({extended : true}));
+app.use(express.urlencoded({extended : false}));
 app.use(express.json());
 
 //connexion database
