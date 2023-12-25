@@ -18,8 +18,9 @@ const register = async(req,res) => {
     try {
         const hashPassword = await bcrypt.hash(password,10);
 
-        userModel.create({username, email, password : hashPassword, firstname, lastname});
+        await userModel.create({username, email, password : hashPassword, firstname, lastname}).exec();
         res.status(201).json({'createSuccessfull' : 'Utilisateur crée avec succès'});
+
     } catch (error) {
         console.log("Erreur d'enregistrement");
         console.log(error);
