@@ -34,7 +34,7 @@ const login = async (req,res) => {
             expiresIn : '1d'
         }
     );
-
+    
     //stocker le refreshtoken dans le champ
     //refreshtoken se trouvant dans la BD
     emailExists.refreshtoken = refreshToken;

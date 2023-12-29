@@ -3,7 +3,7 @@ const userModel = require('../../models/User');
 const logout = async (req,res) => {
     const cookies = req.cookies;
     
-    if(!cookies.refresh_token) return res.sendStatus(204);
+    if(!cookies.refresh_token) return res.sendStatus(401);
 
     const refreshtoken = cookies.refresh_token;
     const userCookies = await userModel.findOne({refreshtoken}).exec();
