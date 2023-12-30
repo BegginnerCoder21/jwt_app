@@ -13,12 +13,12 @@ const register = async(req,res) => {
 
     const userExist = await userModel.exists({email}).exec();
     if(userExist){
-        return res.status(409).json({'ErrorExistsEmail' : "L'email fourni existe déjà !"});
+        return res.sendStatus(409);
     }
     try {
         const hashPassword = await bcrypt.hash(password,10);
 
-        await userModel.create({username, email, password : hashPassword, firstname, lastname}).exec();
+        await userModel.create({username, email, password : hashPassword, firstname, lastname});
         res.status(201).json({'createSuccessfull' : 'Utilisateur crée avec succès'});
 
     } catch (error) {
