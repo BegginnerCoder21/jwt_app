@@ -1,7 +1,7 @@
 const errorNotFound = (req,res) => {
-    res.status(404)
+    
     if(req.accepts('json')){
-        res.json({'error' : '404 Page Not Found'});
+        res.status(404).json({'error' : '404 Page Not Found'});
     }else{
         res.type('text').send('404 Page Not Found');
     }

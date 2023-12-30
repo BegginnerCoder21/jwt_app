@@ -11,13 +11,16 @@ const credentials = require('./middlewares/credentials');
 const errorHandler = require('./middlewares/errorHandler');
 const router = require('./routes/authRoute');
 const errorNotFound = require('./controllers/error/errorNotFound');
+const authenticationMiddleware = require('./middlewares/authentication');
 const PORT = 2100;
 
 app.use(express.urlencoded({extended : false}));
 app.use(express.json());
+app.use(authenticationMiddleware);
 
 //connexion database
 connectDB();
+
 
 //allowed credentials
 app.use(credentials); 
@@ -25,8 +28,10 @@ app.use(credentials);
 //middleware pour les authorisation cors
 app.use(cors(corsOptions));
 
+
 //middelware pour cookie-parser
 app.use(cookieParser());
+
 
 //permission pour les elements static
 app.use('static',express.static(path.join(__dirname,'public')));
@@ -34,8 +39,10 @@ app.use('static',express.static(path.join(__dirname,'public')));
 //Default error handler
 app.use(errorHandler);
 
+
 //Router 
 app.use('/api/auth',router);
+
 
 //erreur lorsqu'aucun chemin de sera trouvé
 app.all('*',errorNotFound);
