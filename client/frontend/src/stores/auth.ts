@@ -4,6 +4,7 @@ import type typeUser from '@/types/user';
 
 export const useAuthStore = defineStore('Auth', () => {
   const user = ref<typeUser>();
+  const accessToken : String = ref()
 
   const users = computed(() => user.value);
 
@@ -29,5 +30,5 @@ export const useAuthStore = defineStore('Auth', () => {
     
   }
 
-  return { user, users, login, register, logout, getUser, refresh, isAuthenticated }
+  return { user, users, login, register, logout, getUser, refresh, isAuthenticated, accesstoken }
 })
