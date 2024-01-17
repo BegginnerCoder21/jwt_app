@@ -20,7 +20,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label">Confirmer mot de passe</label>
-                    <input v-model="registerData.password_confirm" type="password-confirm" class="form-control" id="password-confirm">
+                    <input v-model="registerData.password_confirm" type="password" class="form-control" id="password-confirm">
                     <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -46,6 +46,7 @@ const registerData = reactive<RegisterData>({
 });
 
 const submitRegisterData = async() => {
+    
     authStore.register(registerData).then(() => {
         router.push('/login');
    
