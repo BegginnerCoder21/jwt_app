@@ -6,21 +6,21 @@
                 <div class="mb-3">
                     <label for="username" class="form-label">Nom utilisateur</label>
                     <input v-model="registerData.username" type="text" class="form-control" id="username" >
-                    <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Adresse email</label>
                     <input v-model="registerData.email" type="email" class="form-control" id="email" >
-                    <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input v-model="registerData.password" type="password" class="form-control" id="password">
-                    <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label">Confirmer mot de passe</label>
-                    <input v-model="registerData.password_confirm" type="password" class="form-control" id="password-confirm">
+                    <input v-if="errorMessage" v-model="registerData.password_confirm" type="password" class="form-control" id="password-confirm">
                     <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
