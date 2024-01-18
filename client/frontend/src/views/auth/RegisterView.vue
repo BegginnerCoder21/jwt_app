@@ -14,14 +14,24 @@
                     <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <div class="mb-3">
+                    <label for="firstname" class="form-label">Nom de famille</label>
+                    <input v-model="registerData.firstname" type="text" class="form-control" name="firstname" id="fisrtname" >
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Prenom</label>
+                    <input v-model="registerData.lastname" type="text" name="lastname" class="form-control" id="lastname" >
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                </div>
+                <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input v-model="registerData.password" type="password" class="form-control" id="password">
+                    <input v-model="registerData.password" type="password" name="password" class="form-control" id="password">
                     <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label">Confirmer mot de passe</label>
-                    <input v-if="errorMessage" v-model="registerData.password_confirm" type="password" class="form-control" id="password-confirm">
-                    <p class="error-message text-danger mb-4">{{ errorMessage }}</p>
+                    <input  v-model="registerData.password_confirm" name="password_confirm" type="password" class="form-control" id="password-confirm">
+                    <p v-if="errorMessage" class="error-message text-danger mb-4">{{ errorMessage }}</p>
                 </div>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
             </form>
@@ -41,6 +51,8 @@ const router = useRouter();
 const registerData = reactive<RegisterData>({
     username :"",
     email : "",
+    firstname : "",
+    lastname : "",
     password : "",
     password_confirm : ""
 });

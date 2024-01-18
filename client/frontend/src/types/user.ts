@@ -1,8 +1,8 @@
 export default interface typeUser{
 
-    id : String,
-    email : String
-    username : String,
-    firstname : String,
-    lastname : String
+    id : string,
+    email : string
+    username : string,
+    firstname : string,
+    lastname : string
 }

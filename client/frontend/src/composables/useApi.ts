@@ -9,7 +9,8 @@ export default function useApi(){
         axiosInstance.interceptors.request.use(
             (config) => {
                 if(!config.headers['Authorization']){
-                    config.headers['Authorization'] = `Bearer ${authStore.accessToken}`
+                    localStorage.setItem('access_token',authStore.accessToken)
+                    config.headers['Authorization'] = `Bearer ${authStore.accessToken} `
                 }
                 return config
             },
@@ -33,5 +34,6 @@ export default function useApi(){
                 return Promise.reject(error)
             }
         );
-    })
+    });
+    return axiosInstance;
 }

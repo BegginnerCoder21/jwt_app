@@ -13,14 +13,14 @@ export const useAuthStore = defineStore('Auth', ({
   }),
 
   getters:{
-    user: (state: State) => state.user,
-    isAuthenticated: (state: State) => state?.user.id
+    userDetail: (state: State) => state.user,
+    isAuthenticated: (state: State) => state?.accessToken ? true : false
   },
 
   actions:{
     async login(payload: LoginData) {
       try {
-        const { data } = useApi.post(`api/auth/login`,payload)
+        const { data } = await useApi().post(`http://localhost:2100/api/auth/login`,payload);
         this.accessToken = data?.access_token;
         return data;
       } catch (error: Error | any) {
@@ -30,7 +30,7 @@ export const useAuthStore = defineStore('Auth', ({
   
     async register(payload: RegisterData) { 
       try {
-        const { data } = useApi.post(`api/auth/register`,payload)
+        const { data } = await useApi().post(`http://localhost:2100/api/auth/register`,payload)
         return data;
       } catch (error: Error | any) {
         throw error?.response.message
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore('Auth', ({
   
     async logout() {
       try {
-        const { data } = useApi.post(`api/auth/logout`)
+        const { data } = await useApi().post(`http://localhost:2100/api/auth/logout`)
         this.accessToken = "";
         this.user = {} as typeUser
         return data;
@@ -50,7 +50,7 @@ export const useAuthStore = defineStore('Auth', ({
   
     async getUser() {
       try {
-        const { data } = useApi.get(`api/auth/getUser`)
+        const { data } = await useApi().get(`http://localhost:2100/api/auth/user`)
         this.user = data
         return data;
       } catch (error: Error | any) {
@@ -60,7 +60,7 @@ export const useAuthStore = defineStore('Auth', ({
 
     async refresh() {
       try {
-        const { data } = useApi.post(`api/auth/refresh`)
+        const { data } = await useApi().post(`http://localhost:2100/api/auth/refresh`)
         this.accessToken = data.access_token
         return data;
       } catch (error: Error | any) {

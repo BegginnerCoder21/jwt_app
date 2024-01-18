@@ -12,22 +12,24 @@
         </li>
       </ul>
       <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <router-link :to="{name : ''}" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li v-if="isAuthenticated" class="nav-item dropdown mr-4">
+            <router-link  :to="{name : ''}" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               User
             </router-link>
             <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" :to="{name : 'user'}">Nom utilisateur</router-link></li>
+              <li><router-link class="dropdown-item" :to="{name : 'user'}">{{ user.username }}</router-link></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+              <li @click="logout"><a class="dropdown-item" href="#">Déconnexion</a></li>
             </ul>
           </li>
-        <li class="nav-item">
-          <router-link :to="{name : 'login'}" class="nav-link active" aria-current="page" href="#">Login</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{name : 'register'}" class="nav-link active" aria-current="page" href="#">Incription</router-link>
-        </li>
+        <template v-else>
+          <li class="nav-item">
+            <router-link :to="{name : 'login'}" class="nav-link active" aria-current="page" href="#">Login</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link :to="{name : 'register'}" class="nav-link active" aria-current="page" href="#">Incription</router-link>
+          </li>
+        </template>
       </ul>
     </div>
   </div>
@@ -35,6 +37,29 @@
 </template>
 
 <script setup lang="ts">
+
+import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
+import { computed } from 'vue';
+
+const authStores = useAuthStore();
+
+const user = computed(() => {
+    return authStores.userDetail;
+});
+
+const isAuthenticated = computed(() => {
+    return authStores.isAuthenticated;
+});
+
+const logout = async() => {
+  authStores.logout().then(() => {
+    router.push('/')
+  }).catch((error) => {
+      console.log(error);
+      
+  });
+}
 
 </script>
 

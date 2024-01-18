@@ -2,12 +2,12 @@ const userModel = require('../../models/User');
 const bcrypt = require('bcrypt');
 
 const register = async(req,res) => {
-    const {username,email,firstname,lastname,password,password_comfirm} = req.body;
+    const {username,email,firstname,lastname,password,password_confirm} = req.body;
 
-    if(!username || !email || !firstname || !lastname || !password || !password_comfirm){
+    if(!username || !email || !firstname || !lastname || !password || !password_confirm){
         return res.status(422).json({'ErrorEmptyField' : 'Aucun champs ne doit être vide !'});
     }
-    if(password !== password_comfirm){
+    if(password !== password_confirm){
         return res.status(422).json({'ErrorPasswordDiff' : 'Les mots de passe ne correspondent pas !'});
     }
 

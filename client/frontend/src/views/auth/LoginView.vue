@@ -5,7 +5,7 @@
             <form @submit.prevent="submitLoginData">
                 <div class="mb-3">
                     <label for="email" class="form-label">Adresse email</label>
-                    <input v-model="loginData.email" type="email" class="form-control" id="email" >
+                    <input v-model="loginData.email" type="email" class="form-control" id="email" autocomplete="off">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -39,7 +39,7 @@ const submitLoginData = async() => {
    
     }).catch((error) => {
 
-        errorMessage.value = error.message;
+        errorMessage.value = error;
     });
 }
 

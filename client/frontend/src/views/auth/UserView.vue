@@ -26,7 +26,9 @@ const getUser = async() => {
 
 onMounted(async() => {
     await getUser();
+
 })
+
 
 </script>
 
