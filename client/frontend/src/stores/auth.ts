@@ -3,7 +3,8 @@ import type typeUser from '@/types/user';
 import type LoginData from '@/types/loginData';
 import type RegisterData from '@/types/registerData';
 import type State from '@/types/state';
-import useApi from '@/composables/useApi';
+import useApi, { useApiPrivate } from '@/composables/useApi';
+
 
 
 export const useAuthStore = defineStore('Auth', ({
@@ -18,10 +19,20 @@ export const useAuthStore = defineStore('Auth', ({
   },
 
   actions:{
+    async attempt(){
+      try {
+        this.refresh();
+        this.getUser()
+      } catch (error) {
+        return
+      }
+      return
+    },
     async login(payload: LoginData) {
       try {
         const { data } = await useApi().post(`http://localhost:2100/api/auth/login`,payload);
         this.accessToken = data?.access_token;
+        this.getUser();
         return data;
       } catch (error: Error | any) {
         throw error.response.message;
@@ -39,7 +50,7 @@ export const useAuthStore = defineStore('Auth', ({
   
     async logout() {
       try {
-        const { data } = await useApi().post(`http://localhost:2100/api/auth/logout`)
+        const { data } = await useApiPrivate().post(`http://localhost:2100/api/auth/logout`)
         this.accessToken = "";
         this.user = {} as typeUser
         return data;
@@ -50,7 +61,7 @@ export const useAuthStore = defineStore('Auth', ({
   
     async getUser() {
       try {
-        const { data } = await useApi().get(`http://localhost:2100/api/auth/user`)
+        const { data } = await useApiPrivate().get(`http://localhost:2100/api/auth/user`)
         this.user = data
         return data;
       } catch (error: Error | any) {
@@ -61,7 +72,7 @@ export const useAuthStore = defineStore('Auth', ({
     async refresh() {
       try {
         const { data } = await useApi().post(`http://localhost:2100/api/auth/refresh`)
-        this.accessToken = data.access_token
+        this.accessToken = data?.access_token
         return data;
       } catch (error: Error | any) {
         throw error?.response.message

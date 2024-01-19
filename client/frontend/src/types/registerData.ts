@@ -4,6 +4,6 @@ export default interface RegisterData{
     firstname : string,
     lastname : string,
     password: string,
-    password_confirm : string
+    password_confirm : string,
   }
   

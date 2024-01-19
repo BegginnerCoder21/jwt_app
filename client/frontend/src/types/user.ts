@@ -4,5 +4,6 @@ export default interface typeUser{
     email : string
     username : string,
     firstname : string,
-    lastname : string
+    lastname : string,
+    fullName : string
 }

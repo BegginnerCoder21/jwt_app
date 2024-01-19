@@ -8,7 +8,6 @@ const authentication = async(req, res, next) => {
     if(authHeader?.startsWith('Bearer')) {
         
         const token = authHeader.split(' ')[1];
-        
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async(err, decoded) => {
             if(err){
                 console.log('erreur');

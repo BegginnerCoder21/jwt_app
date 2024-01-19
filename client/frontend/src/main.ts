@@ -6,10 +6,17 @@ import router from './router'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap'
+import { authentication } from './plugins/authentication';
 
 const app = createApp(App)
-
 app.use(createPinia())
-app.use(router)
 
-app.mount('#app')
+authentication.install().then(() => {
+    app.use(router)
+    app.mount('#app')
+
+}).catch((err) => {
+    console.log(err);
+    
+})
+

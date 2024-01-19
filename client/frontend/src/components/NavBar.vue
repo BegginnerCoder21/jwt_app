@@ -49,6 +49,8 @@ const user = computed(() => {
 });
 
 const isAuthenticated = computed(() => {
+    console.log(user.value);
+    
     return authStores.isAuthenticated;
 });
 

@@ -1,12 +1,12 @@
-import { axiosInstance } from "@/utils/axios";
+import { axiosInstance,axiosPrivateInstance } from "@/utils/axios";
 import {useAuthStore} from "@/stores/auth";
 import { watchEffect } from "vue";
 
-export default function useApi(){
+export function useApiPrivate(){
     const authStore = useAuthStore();
 
     watchEffect(() => {
-        axiosInstance.interceptors.request.use(
+        axiosPrivateInstance.interceptors.request.use(
             (config) => {
                 if(!config.headers['Authorization']){
                     localStorage.setItem('access_token',authStore.accessToken)
@@ -19,7 +19,7 @@ export default function useApi(){
             }
         );
     
-        axiosInstance.interceptors.response.use(
+        axiosPrivateInstance.interceptors.response.use(
             
             response => response,
     
@@ -29,11 +29,15 @@ export default function useApi(){
                     prevRequest.sent = true;
                     await authStore.refresh();
                     prevRequest.headers['Authorization'] = authStore.accessToken;
-                    return axiosInstance(prevRequest);
+                    return axiosPrivateInstance(prevRequest);
                 }
                 return Promise.reject(error)
             }
         );
     });
+    return axiosPrivateInstance;
+}
+
+export default function useApi(){
     return axiosInstance;
 }

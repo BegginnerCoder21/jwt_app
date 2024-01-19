@@ -54,7 +54,7 @@ const registerData = reactive<RegisterData>({
     firstname : "",
     lastname : "",
     password : "",
-    password_confirm : ""
+    password_confirm : "",
 });
 
 const submitRegisterData = async() => {
